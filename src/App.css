@@ -1,0 +1,87 @@
+.App {
+}
+
+.App-header {
+
+}
+
+.main {
+    display: flex;
+}
+
+.HierarchyView {
+    padding: 10px;
+    height: 90vh;
+    overflow-y: scroll;
+    border-right: black solid 2px;
+    float:left;
+    min-width: 200px;
+}
+
+.ImageSelectPanel {
+    overflow-y: scroll;
+    height: 100vh;
+    padding: 10px;
+}
+
+.ImageSelectPanel img {
+    margin-right: 5px;
+    margin-left: 5px;
+    min-width: 50px;
+    height: 150px;
+    max-width: 140px;
+}
+
+.ImageSelectPanel div {
+    clear: none;
+    float: left;
+    padding: 5px;
+    width: 150px;
+}
+
+.ImageSelectPanel .label {
+    display: block;
+    overflow: hidden;
+    max-heigh: 20px;
+    height: 18px;
+    max-width: 140px;
+}
+
+.ImageSelectPanel .selected {
+    background-color: lightgray;
+}
+
+.ImageSelectPanel .highlighted {
+    border-top: blue solid 5px;
+}
+
+.ImageSelectPanel .not-highlighted {
+    padding-top: 10px;
+}
+
+.AddPanel {
+}
+
+.rightPanel {
+    float: right;
+}
+
+.StructureNode div {
+    padding-left: 1em;
+}
+
+.selectedRange {
+    border-left: blue 1px solid;
+}
+
+.ManifestSelector {
+    margin: 5px;
+    padding: 10px;
+    border: black dashed 2px;
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
