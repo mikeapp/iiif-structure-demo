@@ -22,12 +22,12 @@ type Props = {
 };
 
 export function SelectionContextProvider({ children, manifest }: Props) {
-  const { structures, topLevelRange } = useStructureContext();
+  const { topLevelRange } = useStructureContext();
   const [selectionState, setSelectionState] = useState<Array<Page>>([]);
   const [selectedRangeId, setSelectedRangeId] = useState<string | null>(null);
 
   const highlightItems =
-    selectedRangeId && topLevelRange
+    selectedRangeId && topLevelRange && topLevelRange.findRange(selectedRangeId)
       ? topLevelRange.findRange(selectedRangeId)!.allPages()
       : [];
 
