@@ -27,9 +27,9 @@ const StructureNodeCanvas = ({ page, range }: CanvasStructureNodeProps) => {
 
   return (
     <div
-      className="StructureNode"
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      className="StructureNode"
     >
       {page.label}
       <Button
