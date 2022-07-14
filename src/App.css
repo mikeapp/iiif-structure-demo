@@ -1,8 +1,5 @@
-.App {
-}
-
-.App-header {
-
+body .main {
+    background-color: white;
 }
 
 .main {
@@ -37,7 +34,7 @@
     float: left;
     padding: 5px;
     width: 150px;
-    height: 170px;
+    height: 180px;
 }
 
 .ImageSelectPanel .label {
@@ -67,9 +64,13 @@
     float: right;
 }
 
-.StructureNode div {
-    padding-left: 1em;
-    margin-top: 0.5em;
+
+.StructureNode .removeCanvasButton {
+    float: right;
+}
+
+.structureActionButton {
+    margin-top: 1em;
 }
 
 .selectedRange {

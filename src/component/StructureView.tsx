@@ -3,6 +3,8 @@ import Range from "../model/Range";
 import { useSelectionContext } from "../contexts/SelectionContext";
 import { useStructureContext } from "../contexts/StructureContext";
 import { v4 as uuidv4 } from "uuid";
+import { Button, Tree } from "antd";
+import StructureNodeCanvas from "./StructureNodeCanvas";
 
 const StructureView = () => {
   const { setSelectedRangeId, selectedRange, selectedItems } =
@@ -60,23 +62,61 @@ const StructureView = () => {
     }
   };
 
+  const mapResourceToTreeNode: any = (resource: any, parent: Range | null) => {
+    const parentId = parent ? parent.id : "top";
+    const resourceId = parentId + "-" + resource.id;
+    if (resource instanceof Range) {
+      return {
+        title: <StructureNode item={resource} />,
+        key: resourceId,
+        children: (resource as Range).items.map((r) =>
+          mapResourceToTreeNode(r, resource)
+        ),
+      };
+    } else {
+      return {
+        title: <StructureNodeCanvas page={resource} range={parent!} />,
+        key: resourceId,
+      };
+    }
+  };
+
+  const children = topLevelRange
+    ? [topLevelRange].map((s) => mapResourceToTreeNode(s))
+    : [];
+  console.log(children);
+
   return (
     <div className="HierarchyView">
       <h2>Object Structure</h2>
-      {topLevelRange
-        ? [topLevelRange].map((s) => <StructureNode item={s} key={s.id} />)
-        : "No structure selected"}
 
-      <button onClick={handleAppendClick} disabled={!selectedRange}>
-        Append to selected range
-      </button>
-      <br />
-      <button onClick={handleDeleteClick} disabled={!selectedRange}>
-        Remove selected range
-      </button>
-      <br />
-      <button onClick={handleCreateRangeClick}>Create a Range</button>
-      <br />
+      {children ? <Tree treeData={children} /> : <></>}
+
+      <div className="buttons">
+        <Button
+          onClick={handleAppendClick}
+          disabled={!selectedRange}
+          className="structureActionButton"
+        >
+          Append to selected range
+        </Button>
+        <br />
+        <Button
+          onClick={handleDeleteClick}
+          disabled={!selectedRange}
+          className="structureActionButton"
+        >
+          Remove selected range
+        </Button>
+        <br />
+        <Button
+          onClick={handleCreateRangeClick}
+          className="structureActionButton"
+        >
+          Create a Range
+        </Button>
+        <br />
+      </div>
     </div>
   );
 };

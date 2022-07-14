@@ -8,6 +8,9 @@ import { Manifest } from "@iiif/presentation-3";
 import Range from "./model/Range";
 import { SelectionContextProvider } from "./contexts/SelectionContext";
 import { StructureContextProvider } from "./contexts/StructureContext";
+import "antd/dist/antd.css";
+import { Layout } from "antd";
+import { Content } from "antd/es/layout/layout";
 
 function App() {
   const [manifest, setManifest] = useState<ManifestObject>(null!);
@@ -31,15 +34,16 @@ function App() {
   return (
     <StructureContextProvider manifest={manifest}>
       <SelectionContextProvider manifest={manifest}>
-        <div className="App">
-          <header className="App-header"></header>
-          <div className="main">
-            <StructureView />
-            <div className="rightPanel">
-              <ImageSelectPanel pages={manifest.items} />
+        <Layout>
+          <Content>
+            <div className="main">
+              <StructureView />
+              <div className="rightPanel">
+                <ImageSelectPanel pages={manifest.items} />
+              </div>
             </div>
-          </div>
-        </div>
+          </Content>
+        </Layout>
       </SelectionContextProvider>
     </StructureContextProvider>
   );

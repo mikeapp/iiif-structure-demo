@@ -10,14 +10,6 @@ interface StructureNodeProps {
 const StructureNode = ({ item }: StructureNodeProps) => {
   const { setSelectedRangeId, selectedRange } = useSelectionContext();
 
-  const getComponent = (child: Range | Page) => {
-    return "Range" === child.type ? (
-      <StructureNode item={child as Range} key={child.id} />
-    ) : (
-      <StructureNodeCanvas page={child as Page} range={item} key={child.id} />
-    );
-  };
-
   const handleSelectClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!selectedRange || selectedRange.id !== item.id) {
@@ -37,7 +29,6 @@ const StructureNode = ({ item }: StructureNodeProps) => {
       <div onClick={handleSelectClick}>
         <b>{item.label}</b>
       </div>
-      <div>{item.items.map((c) => getComponent(c))}</div>
     </div>
   );
 };

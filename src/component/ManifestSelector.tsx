@@ -5,6 +5,7 @@ const ManifestSelector = ({ setManifest }) => {
   const [uri, setUri] = useState(
     "https://iiif.io/api/cookbook/recipe/0024-book-4-toc/manifest.json"
   );
+  //  "https://iiif.io/api/cookbook/recipe/0024-book-4-toc/manifest.json"
   //"https://collections.library.yale.edu/manifests/11684593"
   // https://collections.library.yale.edu/manifests/30049054
 
@@ -41,6 +42,23 @@ const ManifestSelector = ({ setManifest }) => {
         onChange={(e) => setUri(e.target.value)}
       />
       <button onClick={handleLoadEvent}>load</button>
+      <div>
+        Examples:
+        <ul>
+          <li>
+            Cookbook example with TOC:
+            https://iiif.io/api/cookbook/recipe/0024-book-4-toc/manifest.json
+          </li>
+          <li>
+            Medium-sized manuscript:
+            https://collections.library.yale.edu/manifests/11684593
+          </li>
+          <li>
+            1400 page JSS item, performance issues!
+            https://collections.library.yale.edu/manifests/30049054
+          </li>
+        </ul>
+      </div>
       {error}
     </div>
   );
