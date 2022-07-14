@@ -11,7 +11,7 @@
 
 .HierarchyView {
     padding: 10px;
-    height: 90vh;
+    height: 100vh;
     overflow-y: scroll;
     border-right: black solid 2px;
     float:left;
@@ -37,6 +37,7 @@
     float: left;
     padding: 5px;
     width: 150px;
+    height: 170px;
 }
 
 .ImageSelectPanel .label {
@@ -68,6 +69,7 @@
 
 .StructureNode div {
     padding-left: 1em;
+    margin-top: 0.5em;
 }
 
 .selectedRange {

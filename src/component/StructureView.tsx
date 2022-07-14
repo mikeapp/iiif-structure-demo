@@ -2,15 +2,11 @@ import StructureNode from "./StructureNode";
 import Range from "../model/Range";
 import { useSelectionContext } from "../contexts/SelectionContext";
 import { useStructureContext } from "../contexts/StructureContext";
+import { v4 as uuidv4 } from "uuid";
 
 const StructureView = () => {
-  const {
-    setHighlightItems,
-    highlightItems,
-    setSelectedRangeId,
-    selectedRange,
-    selectedItems,
-  } = useSelectionContext();
+  const { setSelectedRangeId, selectedRange, selectedItems } =
+    useSelectionContext();
   const {
     topLevelRange,
     setTopLevelRange,
@@ -18,29 +14,25 @@ const StructureView = () => {
     setStructures,
     removeItem,
     addPages,
+    addRange,
   } = useStructureContext();
-
-  const handleClearClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setHighlightItems([]);
-    setSelectedRangeId(null);
-  };
 
   const handleCreateRangeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const r = new Range(
+    const newRange = new Range(
       {
-        id: "https://collections.library.yale.edu/manifest/range/uuid",
+        id: "https://collections.library.yale.edu/manifest/range/" + uuidv4(),
         type: "Range",
         label: { en: ["New range"] },
         items: [],
       },
       new Map()
     );
-    const newTopLevelRanges = [...structures, r];
-    setStructures(newTopLevelRanges);
-    setTopLevelRange(r);
-    setSelectedRangeId(null);
+    if (selectedRange && topLevelRange) {
+      addRange(topLevelRange, selectedRange, newRange);
+    } else if (!topLevelRange && !selectedRange) {
+      addRange(null, null, newRange);
+    }
   };
 
   const handleAppendClick = (e: React.MouseEvent) => {
@@ -58,14 +50,12 @@ const StructureView = () => {
         setStructures(otherStructures);
         setTopLevelRange(otherStructures?.[0]);
         setSelectedRangeId(null);
-        setHighlightItems([]);
         return;
       }
       const rangeParent = topLevelRange.findParent(selectedRange);
       if (rangeParent) {
         removeItem(topLevelRange, rangeParent, selectedRange);
         setSelectedRangeId(null);
-        setHighlightItems([]);
       }
     }
   };
@@ -77,14 +67,16 @@ const StructureView = () => {
         ? [topLevelRange].map((s) => <StructureNode item={s} key={s.id} />)
         : "No structure selected"}
 
-      <button onClick={handleClearClick}>Clear selection</button>
       <button onClick={handleAppendClick} disabled={!selectedRange}>
         Append to selected range
       </button>
+      <br />
       <button onClick={handleDeleteClick} disabled={!selectedRange}>
         Remove selected range
       </button>
+      <br />
       <button onClick={handleCreateRangeClick}>Create a Range</button>
+      <br />
     </div>
   );
 };

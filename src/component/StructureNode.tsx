@@ -20,11 +20,15 @@ const StructureNode = ({ item }: StructureNodeProps) => {
 
   const handleSelectClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setSelectedRangeId(item.id);
+    if (!selectedRange || selectedRange.id !== item.id) {
+      setSelectedRangeId(item.id);
+    } else {
+      setSelectedRangeId(null);
+    }
   };
 
   const getClassName = () => {
-    if (item === selectedRange) return "StructureNode selectedRange";
+    if (item.id === selectedRange?.id) return "StructureNode selectedRange";
     return "StructureNode";
   };
 

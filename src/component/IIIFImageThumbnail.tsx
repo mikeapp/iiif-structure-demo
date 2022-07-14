@@ -1,5 +1,6 @@
 import Page from "../model/Page";
 import { useSelectionContext } from "../contexts/SelectionContext";
+import { useInView } from "react-intersection-observer";
 
 interface IIIFImageThumbnailProps {
   page: Page;
@@ -8,6 +9,10 @@ interface IIIFImageThumbnailProps {
 const IIIFImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
   const { selectedItems, setSelectedItems, setEndSelection, highlightItems } =
     useSelectionContext();
+  const { ref, inView, entry } = useInView({
+    threshold: 0,
+  });
+
   let className = "";
   className += selectedItems.includes(page) ? " selected" : "";
   className += highlightItems.includes(page)
@@ -30,13 +35,17 @@ const IIIFImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
   };
 
   return (
-    <div className={className} onClick={handleClick}>
-      <img
-        id={page.id}
-        src={page.thumbnail}
-        loading="lazy"
-        alt={page.label.toString()}
-      />
+    <div className={className} onClick={handleClick} ref={ref}>
+      {inView ? (
+        <img
+          id={page.id}
+          src={page.thumbnail}
+          loading="lazy"
+          alt={page.label.toString()}
+        />
+      ) : (
+        <></>
+      )}
       <br />
       <span className="label">{page.altText().toString()}</span>
     </div>

@@ -15,6 +15,11 @@ type StructureContextType = {
     target: Range | Page
   ) => void;
   addPages: (topLevelRange: Range, range: Range, pages: Array<Page>) => void;
+  addRange: (
+    topLevelRange: Range | null,
+    parent: Range | null,
+    range: Range
+  ) => void;
 };
 
 const StructureContext = createContext<StructureContextType>(null!);
@@ -40,7 +45,10 @@ export function StructureContextProvider({ children, manifest }: Props) {
       topLevel?.removeItem(range, target);
     });
     setStructures(nextStructures);
-    setTopLevelRange(nextStructures.find((r) => r.id == topLevelRange.id)!);
+    setTopLevelRange(
+      nextStructures.find((r) => r.id == topLevelRange.id) ||
+        nextStructures?.[0]
+    );
   };
 
   const addPages = (topLevelRange: Range, range: Range, pages: Array<Page>) => {
@@ -51,7 +59,36 @@ export function StructureContextProvider({ children, manifest }: Props) {
       pages.forEach((p) => newRange!.items.push(p));
     });
     setStructures(nextStructures);
-    setTopLevelRange(nextStructures.find((r) => r.id == topLevelRange.id)!);
+    setTopLevelRange(
+      nextStructures.find((r) => r.id == topLevelRange.id) ||
+        nextStructures?.[0]
+    );
+  };
+
+  const addRange = (
+    topLevelRange: Range | null,
+    parent: Range | null,
+    range: Range
+  ) => {
+    if (!topLevelRange && !parent) {
+      const nextStructures = produce(structures, (draft) => {
+        structures.push(range);
+      });
+      setStructures(nextStructures);
+      setTopLevelRange(nextStructures.find((r) => r.id == range.id)!);
+    } else if (topLevelRange && parent) {
+      const nextStructures = produce(structures, (draft) => {
+        const newRange = draft
+          .find((s) => s.id == topLevelRange.id)!
+          .findRange(parent.id);
+        newRange!.items.push(range);
+      });
+      setStructures(nextStructures);
+      setTopLevelRange(
+        nextStructures.find((r) => r.id == topLevelRange.id) ||
+          nextStructures?.[0]
+      );
+    }
   };
 
   const context: StructureContextType = {
@@ -61,6 +98,7 @@ export function StructureContextProvider({ children, manifest }: Props) {
     setStructures,
     removeItem,
     addPages,
+    addRange,
   };
 
   return <StructureContext.Provider value={context} children={children} />;

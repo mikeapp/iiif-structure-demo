@@ -8,7 +8,6 @@ type SelectionContextType = {
   selectedItems: Array<Page>;
   setSelectedItems: React.Dispatch<Array<Page>>;
   highlightItems: Array<Page>;
-  setHighlightItems: React.Dispatch<Array<Page>>;
   setEndSelection: (page: Page) => void;
   selectedRange: Range | null;
   setSelectedRangeId: (id: string | null) => void;
@@ -25,19 +24,17 @@ type Props = {
 export function SelectionContextProvider({ children, manifest }: Props) {
   const { structures, topLevelRange } = useStructureContext();
   const [selectionState, setSelectionState] = useState<Array<Page>>([]);
-  const [highlightItems, setHighlightItems] = useState<Array<Page>>([]);
   const [selectedRangeId, setSelectedRangeId] = useState<string | null>(null);
+
+  const highlightItems =
+    selectedRangeId && topLevelRange
+      ? topLevelRange.findRange(selectedRangeId)!.allPages()
+      : [];
 
   const selectedRange =
     topLevelRange && selectedRangeId
       ? topLevelRange.findRange(selectedRangeId)
       : null;
-
-  useEffect(() => {
-    if (selectedRange) {
-      setHighlightItems(selectedRange.allPages());
-    }
-  }, [structures, selectedRange]);
 
   const setEndSelection = (page: Page) => {
     if (selectionState && selectionState.length === 1) {
@@ -53,7 +50,6 @@ export function SelectionContextProvider({ children, manifest }: Props) {
     selectedItems: selectionState,
     setSelectedItems: setSelectionState,
     highlightItems,
-    setHighlightItems,
     setEndSelection,
     selectedRange,
     setSelectedRangeId,
