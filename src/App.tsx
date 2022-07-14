@@ -8,6 +8,7 @@ import { Manifest } from "@iiif/presentation-3";
 import Range from "./model/Range";
 import { SelectionContextProvider } from "./contexts/SelectionContext";
 import { StructureContextProvider } from "./contexts/StructureContext";
+import "antd/dist/antd.css";
 
 function App() {
   const [manifest, setManifest] = useState<ManifestObject>(null!);

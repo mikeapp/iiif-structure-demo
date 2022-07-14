@@ -3,6 +3,7 @@ import Range from "../model/Range";
 import { useSelectionContext } from "../contexts/SelectionContext";
 import { useStructureContext } from "../contexts/StructureContext";
 import { v4 as uuidv4 } from "uuid";
+import { Button } from "antd";
 
 const StructureView = () => {
   const { setSelectedRangeId, selectedRange, selectedItems } =
@@ -67,15 +68,15 @@ const StructureView = () => {
         ? [topLevelRange].map((s) => <StructureNode item={s} key={s.id} />)
         : "No structure selected"}
 
-      <button onClick={handleAppendClick} disabled={!selectedRange}>
+      <Button onClick={handleAppendClick} disabled={!selectedRange}>
         Append to selected range
-      </button>
+      </Button>
       <br />
-      <button onClick={handleDeleteClick} disabled={!selectedRange}>
+      <Button onClick={handleDeleteClick} disabled={!selectedRange}>
         Remove selected range
-      </button>
+      </Button>
       <br />
-      <button onClick={handleCreateRangeClick}>Create a Range</button>
+      <Button onClick={handleCreateRangeClick}>Create a Range</Button>
       <br />
     </div>
   );

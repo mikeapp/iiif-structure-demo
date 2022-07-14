@@ -72,6 +72,10 @@
     margin-top: 0.5em;
 }
 
+.StructureNode .removeCanvasButton {
+    float: right;
+}
+
 .selectedRange {
     border-left: blue 1px solid;
 }
