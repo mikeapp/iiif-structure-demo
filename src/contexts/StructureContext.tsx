@@ -30,30 +30,30 @@ export function StructureContextProvider({ children, manifest }: Props) {
   const removeItem = (range: Range, target: Range | Page) => {
     if (!topLevelRange) throw "No top level Range selected";
     const nextStructures = produce(structures, (draft) => {
-      const topLevel = draft.find((s) => s.id == topLevelRange.id);
-      topLevel?.removeItem(range, target);
+      const draftTopLevel = getTopLevelRange(draft);
+      draftTopLevel?.removeItem(range, target);
     });
     setStructures(nextStructures);
-    setTopLevelRange(
-      nextStructures.find((r) => r.id == topLevelRange.id) ||
-        nextStructures?.[0]
-    );
+    setTopLevelRange(getTopLevelRange(nextStructures));
   };
 
   const addPages = (range: Range, pages: Array<Page>) => {
     if (!topLevelRange) throw "No top level Range selected";
     const nextStructures = produce(structures, (draft) => {
-      const newRange = draft
-        .find((s) => s.id == topLevelRange.id)!
-        .findRange(range.id);
+      const draftTopLevel = getTopLevelRange(draft);
+      const newRange = draftTopLevel.findRange(range.id);
       pages.forEach((p) => newRange!.items.push(p));
     });
     setStructures(nextStructures);
-    setTopLevelRange(
-      nextStructures.find((r) => r.id == topLevelRange.id) ||
-        nextStructures?.[0]
-    );
+    setTopLevelRange(getTopLevelRange(nextStructures));
   };
+
+  function getTopLevelRange(nextStructures: Array<Range>) {
+    return (
+      nextStructures.find((r) => r.id == topLevelRange?.id) ||
+      nextStructures?.[0]
+    );
+  }
 
   const addRange = (parent: Range | null, range: Range) => {
     if (!topLevelRange && !parent) {
@@ -61,19 +61,16 @@ export function StructureContextProvider({ children, manifest }: Props) {
         structures.push(range);
       });
       setStructures(nextStructures);
-      setTopLevelRange(nextStructures.find((r) => r.id == range.id)!);
+      setTopLevelRange(getTopLevelRange(nextStructures));
     } else if (topLevelRange && parent) {
       const nextStructures = produce(structures, (draft) => {
-        const newRange = draft
-          .find((s) => s.id == topLevelRange.id)!
-          .findRange(parent.id);
+        const draftTopLevel = getTopLevelRange(draft);
+        console.log(draftTopLevel);
+        const newRange = draftTopLevel.findRange(parent.id);
         newRange!.items.push(range);
       });
       setStructures(nextStructures);
-      setTopLevelRange(
-        nextStructures.find((r) => r.id == topLevelRange.id) ||
-          nextStructures?.[0]
-      );
+      setTopLevelRange(getTopLevelRange(nextStructures));
     }
   };
 
