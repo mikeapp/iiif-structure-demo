@@ -9,17 +9,9 @@ type StructureContextType = {
   setTopLevelRange: React.Dispatch<Range>;
   structures: Array<Range>;
   setStructures: React.Dispatch<Array<Range>>;
-  removeItem: (
-    topLevelRange: Range,
-    range: Range,
-    target: Range | Page
-  ) => void;
-  addPages: (topLevelRange: Range, range: Range, pages: Array<Page>) => void;
-  addRange: (
-    topLevelRange: Range | null,
-    parent: Range | null,
-    range: Range
-  ) => void;
+  removeItem: (range: Range, target: Range | Page) => void;
+  addPages: (range: Range, pages: Array<Page>) => void;
+  addRange: (parent: Range | null, range: Range) => void;
 };
 
 const StructureContext = createContext<StructureContextType>(null!);
@@ -35,11 +27,8 @@ export function StructureContextProvider({ children, manifest }: Props) {
     manifest.structures?.[0]
   );
 
-  const removeItem = (
-    topLevelRange: Range,
-    range: Range,
-    target: Range | Page
-  ) => {
+  const removeItem = (range: Range, target: Range | Page) => {
+    if (!topLevelRange) throw "No top level Range selected";
     const nextStructures = produce(structures, (draft) => {
       const topLevel = draft.find((s) => s.id == topLevelRange.id);
       topLevel?.removeItem(range, target);
@@ -51,7 +40,8 @@ export function StructureContextProvider({ children, manifest }: Props) {
     );
   };
 
-  const addPages = (topLevelRange: Range, range: Range, pages: Array<Page>) => {
+  const addPages = (range: Range, pages: Array<Page>) => {
+    if (!topLevelRange) throw "No top level Range selected";
     const nextStructures = produce(structures, (draft) => {
       const newRange = draft
         .find((s) => s.id == topLevelRange.id)!
@@ -65,11 +55,7 @@ export function StructureContextProvider({ children, manifest }: Props) {
     );
   };
 
-  const addRange = (
-    topLevelRange: Range | null,
-    parent: Range | null,
-    range: Range
-  ) => {
+  const addRange = (parent: Range | null, range: Range) => {
     if (!topLevelRange && !parent) {
       const nextStructures = produce(structures, (draft) => {
         structures.push(range);

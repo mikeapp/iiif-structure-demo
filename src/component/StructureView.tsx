@@ -31,16 +31,16 @@ const StructureView = () => {
       new Map()
     );
     if (selectedRange && topLevelRange) {
-      addRange(topLevelRange, selectedRange, newRange);
+      addRange(selectedRange, newRange);
     } else if (!topLevelRange && !selectedRange) {
-      addRange(null, null, newRange);
+      addRange(null, newRange);
     }
   };
 
   const handleAppendClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (selectedRange && topLevelRange) {
-      addPages(topLevelRange, selectedRange, selectedItems);
+      addPages(selectedRange, selectedItems);
     }
   };
 
@@ -56,7 +56,7 @@ const StructureView = () => {
       }
       const rangeParent = topLevelRange.findParent(selectedRange);
       if (rangeParent) {
-        removeItem(topLevelRange, rangeParent, selectedRange);
+        removeItem(rangeParent, selectedRange);
         setSelectedRangeId(null);
       }
     }

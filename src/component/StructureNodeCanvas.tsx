@@ -15,7 +15,7 @@ const StructureNodeCanvas = ({ page, range }: CanvasStructureNodeProps) => {
 
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
-    removeItem(topLevelRange!, range, page);
+    removeItem(range, page);
   };
 
   const handleMouseOver = () => {
