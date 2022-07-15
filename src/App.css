@@ -25,7 +25,7 @@ body .main {
     margin-right: 5px;
     margin-left: 5px;
     min-width: 50px;
-    height: 150px;
+    max-height: 150px;
     max-width: 140px;
 }
 
@@ -40,7 +40,7 @@ body .main {
 .ImageSelectPanel .label {
     display: block;
     overflow: hidden;
-    max-heigh: 20px;
+    max-height: 20px;
     height: 18px;
     max-width: 140px;
 }
