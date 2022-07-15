@@ -6,7 +6,7 @@ interface IIIFImageThumbnailProps {
   page: Page;
 }
 
-const IIIFImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
+const ImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
   const { selectedItems, setSelectedItems, setEndSelection, highlightItems } =
     useSelectionContext();
   const { ref, inView, entry } = useInView({
@@ -18,6 +18,7 @@ const IIIFImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
   className += highlightItems.includes(page)
     ? " highlighted"
     : " not-highlighted";
+  className += 'smallImage';
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -52,4 +53,4 @@ const IIIFImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
   );
 };
 
-export default IIIFImageThumbnail;
+export default ImageThumbnail;

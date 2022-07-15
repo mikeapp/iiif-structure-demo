@@ -1,4 +1,4 @@
-import IIIFImageThumbnail from "./IIIFImageThumbnail";
+import ImageThumbnail from "./ImageThumbnail";
 import Page from "../model/Page";
 
 interface ImageSelectPanelProps {
@@ -10,7 +10,7 @@ const ImageSelectPanel = ({ pages }: ImageSelectPanelProps) => {
     <div className="ImageSelectPanel prevent-select">
       <h2>Images</h2>
       {pages.map((page) => (
-        <IIIFImageThumbnail page={page} key={page.id} />
+        <ImageThumbnail page={page} key={page.id} />
       ))}
     </div>
   );
