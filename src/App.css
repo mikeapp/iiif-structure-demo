@@ -21,6 +21,16 @@ body .main {
     padding: 10px;
 }
 
+.imageSelectControl {
+    width: 100%;
+    padding-bottom: 1em;
+    text-align: right;
+}
+
+.ImageSelectPanel .imageGrid {
+    clear: both;
+}
+
 .ImageSelectPanel img {
     margin-right: 5px;
     margin-left: 5px;
@@ -29,7 +39,7 @@ body .main {
     max-width: 140px;
 }
 
-.ImageSelectPanel div {
+.ImageSelectPanel .imageGrid div {
     clear: none;
     float: left;
     padding: 5px;
