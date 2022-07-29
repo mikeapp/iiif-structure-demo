@@ -18,7 +18,7 @@ const ImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
   className += highlightItems.includes(page)
     ? " highlighted"
     : " not-highlighted";
-  className += 'smallImage';
+  className += ' smallImage';
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
