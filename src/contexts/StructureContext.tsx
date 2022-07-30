@@ -41,8 +41,8 @@ export function StructureContextProvider({ children, manifest }: Props) {
     if (!topLevelRange) throw "No top level Range selected";
     const nextStructures = produce(structures, (draft) => {
       const draftTopLevel = getTopLevelRange(draft);
-      const newRange = draftTopLevel.findRange(range.id);
-      pages.forEach((p) => newRange!.items.push(p));
+      const newRange = draftTopLevel.findRange(range.uuid);
+      pages.forEach((p) => newRange!.items.push(new Page(p.canvas)));
     });
     setStructures(nextStructures);
     setTopLevelRange(getTopLevelRange(nextStructures));
@@ -65,8 +65,7 @@ export function StructureContextProvider({ children, manifest }: Props) {
     } else if (topLevelRange && parent) {
       const nextStructures = produce(structures, (draft) => {
         const draftTopLevel = getTopLevelRange(draft);
-        console.log(draftTopLevel);
-        const newRange = draftTopLevel.findRange(parent.id);
+        const newRange = draftTopLevel.findRange(parent.uuid);
         newRange!.items.push(range);
       });
       setStructures(nextStructures);

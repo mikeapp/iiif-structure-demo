@@ -79,18 +79,18 @@ class Range extends Resource {
     return null;
   }
 
-  findRange(target: string): Range | null {
-    if (this.id == target) return this;
+  findRange(targetUuid: string): Range | null {
+    if (this.uuid == targetUuid) return this;
     for (const r of this.allRanges()) {
-      const result = r.findRange(target);
+      const result = r.findRange(targetUuid);
       if (result) return result;
     }
     return null;
   }
 
   removeItem(parent: Range, target: Range | Page): boolean {
-    if (this.id == parent.id) {
-      const item = this.items.find((i) => i.id == target.id);
+    if (this.uuid == parent.uuid) {
+      const item = this.items.find((i) => i.uuid == target.uuid);
       if (item) {
         const index = this.items.indexOf(item);
         if (index > -1) {

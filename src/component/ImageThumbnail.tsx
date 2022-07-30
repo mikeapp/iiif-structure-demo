@@ -15,16 +15,16 @@ const ImageThumbnail = ({ page }: IIIFImageThumbnailProps) => {
 
   let className = "";
   className += selectedItems.includes(page) ? " selected" : "";
-  className += highlightItems.includes(page)
+  className += highlightItems.includes(page.id)
     ? " highlighted"
     : " not-highlighted";
-  className += ' smallImage';
+  className += " smallImage";
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (e.shiftKey) {
       setEndSelection(page);
-    } else if (e.metaKey) {
+    } else if (e.metaKey && !selectedItems.includes(page)) {
       setSelectedItems([...selectedItems, page]);
     } else {
       if (selectedItems.length === 1 && selectedItems.includes(page)) {

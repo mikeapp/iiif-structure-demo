@@ -7,7 +7,7 @@ import { useStructureContext } from "./StructureContext";
 type SelectionContextType = {
   selectedItems: Array<Page>;
   setSelectedItems: React.Dispatch<Array<Page>>;
-  highlightItems: Array<Page>;
+  highlightItems: Array<string>;
   setEndSelection: (page: Page) => void;
   selectedRange: Range | null;
   setSelectedRangeId: (id: string | null) => void;
@@ -28,8 +28,13 @@ export function SelectionContextProvider({ children, manifest }: Props) {
 
   const highlightItems =
     selectedRangeId && topLevelRange && topLevelRange.findRange(selectedRangeId)
-      ? topLevelRange.findRange(selectedRangeId)!.allPages()
+      ? topLevelRange
+          .findRange(selectedRangeId)!
+          .allPages()
+          .map((p) => p.id)
       : [];
+
+  console.log(highlightItems);
 
   const selectedRange =
     topLevelRange && selectedRangeId

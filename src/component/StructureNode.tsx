@@ -12,8 +12,8 @@ const StructureNode = ({ item }: StructureNodeProps) => {
 
   const handleSelectClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (!selectedRange || selectedRange.id !== item.id) {
-      setSelectedRangeId(item.id);
+    if (!selectedRange || selectedRange.uuid !== item.uuid) {
+      setSelectedRangeId(item.uuid);
     } else {
       setSelectedRangeId(null);
     }

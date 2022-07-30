@@ -62,13 +62,17 @@ const StructureView = () => {
     }
   };
 
-  const mapResourceToTreeNode: any = (resource: any, parent: Range | null, index = 0) => {
+  const mapResourceToTreeNode: any = (
+    resource: any,
+    parent: Range | null,
+    index = 0
+  ) => {
     const parentId = parent ? parent.id : "top";
-    const resourceId = parentId + "-" + resource.id + index;
+    const key = resource.uuid;
     if (resource instanceof Range) {
       return {
         title: <StructureNode item={resource} />,
-        key: resourceId,
+        key,
         children: (resource as Range).items.map((r, index) =>
           mapResourceToTreeNode(r, resource, index)
         ),
@@ -76,7 +80,7 @@ const StructureView = () => {
     } else {
       return {
         title: <StructureNodeCanvas page={resource} range={parent!} />,
-        key: resourceId,
+        key,
       };
     }
   };
